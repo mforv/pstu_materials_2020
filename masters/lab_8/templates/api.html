@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:og="http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Пример лабораторной №8</title>
+    <link type="text/css" rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <div class="container" style="grid-template-columns: auto; justify-content: center;">
+        <button onclick="loadData();">Загрузить данные</button>
+    </div>
+    <div class="container" id="packages-cont"></div>
+    
+    <script>
+        function loadData()
+        {
+            
+            fetch('/list')
+            .then(resp => resp.json())
+            .then(data => {
+                const container = document.getElementById('packages-cont');
+                data.forEach(element => {
+                    let elName = document.createElement('span');
+                    elName.innerText = element['name'];
+                    container.appendChild(elName);
+                    let elVersion = document.createElement('span');
+                    elVersion.innerText = element['version'];
+                    container.appendChild(elVersion);
+                    let elSize = document.createElement('span');
+                    elSize.innerText = element['size'];
+                    container.appendChild(elSize);
+                    let elDate = document.createElement('span');
+                    elDate.innerText = new Date(element['date']+'Z').toLocaleString();
+                    container.appendChild(elDate);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
